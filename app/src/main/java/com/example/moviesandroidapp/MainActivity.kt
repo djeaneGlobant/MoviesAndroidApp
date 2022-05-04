@@ -4,8 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import com.example.movies.PopularMoviesActivity
-import com.example.movies.data.repository.PopularMoviesRepository
+import com.example.movies.presentation.PopularMoviesActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
