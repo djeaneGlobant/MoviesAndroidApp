@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2726449275362319" />
         <entry key="movies/src/main/res/layout/activity_popular_movies.xml" value="0.2463768115942029" />
+        <entry key="moviesexample/src/main/res/layout/activity_popular_movies.xml" value="0.20520833333333333" />
       </map>
     </option>
   </component>
