@@ -6,9 +6,9 @@ import javax.inject.Inject
 
 class PopularMoviesViewModel @Inject constructor(
     private val getPopularMovies: PopularMoviesUseCase
-): ViewModel(){
+) : ViewModel() {
 
-    fun getMovies(){
+    fun getMovies() {
         getPopularMovies.invoke()
     }
 }

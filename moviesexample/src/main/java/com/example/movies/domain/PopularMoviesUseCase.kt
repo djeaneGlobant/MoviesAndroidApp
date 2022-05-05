@@ -9,9 +9,9 @@ interface PopularMoviesUseCase {
 
 class PopularMoviesUseCaseImpl @Inject constructor(
     private val repository: @JvmSuppressWildcards PopularMoviesRepository
-): PopularMoviesUseCase {
+) : PopularMoviesUseCase {
 
-    override fun invoke(){
+    override fun invoke() {
         repository.getPopularMovies()
     }
 }
