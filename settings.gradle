@@ -12,6 +12,10 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "MoviesAndroidApp"
 include ':app'
 include ':moviedetails'
+include ':network'
+include ':moviesexample'
+include ':base'
