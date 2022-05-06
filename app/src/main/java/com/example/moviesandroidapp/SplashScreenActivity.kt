@@ -8,7 +8,7 @@ import android.os.Looper
 import android.widget.TextView
 import com.airbnb.lottie.LottieAnimationView
 
-class SplashScreen : AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity() {
 
     lateinit var handler: Handler
     override fun onCreate(savedInstanceState: Bundle?) {
