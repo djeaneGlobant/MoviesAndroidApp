@@ -43,7 +43,7 @@ internal class EventListAdapter(
 
         fun bind(event: Event) {
             with(event) {
-                Picasso.get().load(imageUrl).into(ivMovieImage)
+                Picasso.get().load(imageUrl).error(R.drawable.error_loaded_image).into(ivMovieImage)
                 tvTitle.text = name
                 tvCity.text = "(${location.city})"
                 tvDescription.text = description

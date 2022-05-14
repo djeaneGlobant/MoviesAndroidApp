@@ -1,6 +1,5 @@
 package com.example.eventlist.domain.model
 
-import com.example.eventlist.data.database.entity.AddressEntity
 import com.example.eventlist.data.model.AddressModel
 
 data class Address(
@@ -10,7 +9,3 @@ data class Address(
 )
 
 fun AddressModel.toDomain() = Address(city, country, state)
-
-fun AddressEntity.toDomain() = Address(city, country, state)
-
-fun Address.toEntity() = AddressEntity(city, country, state)

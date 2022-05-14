@@ -13,7 +13,6 @@ import com.example.eventlist.data.database.entity.EventEntity
     ],
     version = 1
 )
-@TypeConverters(Converters::class)
 abstract class EventDataBase: RoomDatabase() {
     abstract fun eventDao(): EventDao
 }

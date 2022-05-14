@@ -54,7 +54,9 @@ class EventListFragment : Fragment() {
                     pbLoading.visibility = View.VISIBLE
                 }
                 is UIState.Error -> {
-                    val errorMessage = view.resources.getResourceName(R.string.common_ui_error)
+                    rvFlEvents.visibility = View.VISIBLE
+                    pbLoading.visibility = View.GONE
+                    val errorMessage = view.resources.getString(R.string.common_ui_error)
                     Snackbar.make(view.rootView, errorMessage, BaseTransientBottomBar.LENGTH_LONG).show()
                 }
             }

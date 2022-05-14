@@ -1,9 +1,8 @@
 package com.example.eventlist.data.network
 
 import com.example.eventlist.data.database.EventDataBase
-import com.example.eventlist.domain.model.Event
-import com.example.eventlist.domain.model.toDomain
-import com.example.eventlist.domain.model.toEntity
+import com.example.eventlist.data.database.entity.EventEntity
+import com.example.eventlist.domain.model.*
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
@@ -21,24 +20,27 @@ class EventRepository @Inject constructor(
     private var current: Event? = null
 
     override suspend fun getAll(query: String?): DataState<List<Event>> {
-        val dbEvents = db.eventDao().getAll()
-        if (dbEvents.isNotEmpty()) {
-            return DataState.Success(dbEvents.map { it.toDomain() })
-        }
-        delay(4000)
-        try {
-            val events = helper.getAll().results.map { it.toDomain() }
-            db.eventDao().insertAll(events.map { it.toEntity() })
-            if (!query.isNullOrEmpty()) {
-                val result = events.filter {
-                    it.location.toString().lowercase().contains(query.lowercase())
-                }
-                return DataState.Success(result)
+        delay(2000)
+        return try {
+            val dbEvents = db.eventDao().getAll()
+            val events = helper.getAll(query).results.toDomainList().map { event ->
+                dbEvents.firstOrNull { dbEvent -> dbEvent.id == event.id }?.let { dbEvent ->
+                    event.isFavorite = dbEvent.isFavorite
+                    event
+                } ?: event
             }
-            return DataState.Success(events)
+            DataState.Success(events.searchQuery(query))
         } catch (e: Exception) {
-            return DataState.Failure(e)
+            DataState.Failure(e)
         }
+    }
+
+    private fun List<Event>.searchQuery(query: String?): List<Event> {
+        return query?.let {
+            filter {
+                it.location.toString().lowercase().contains(query.lowercase())
+            }
+        } ?: this
     }
 
     override fun setCurrent(event: Event?) {
@@ -48,7 +50,7 @@ class EventRepository @Inject constructor(
     override fun getCurrent(): Event? = current
 
     override suspend fun toggleFavorite(id: String, isFavorite: Boolean) {
-        db.eventDao().updateFavorite(id, isFavorite)
+        db.eventDao().insert(EventEntity(id, isFavorite))
     }
 }
 
