@@ -1,4 +1,4 @@
-package com.example.movielist
+package com.example.eventtabhome
 
 import org.junit.Test
 
