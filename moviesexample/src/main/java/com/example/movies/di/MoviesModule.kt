@@ -3,10 +3,12 @@ package com.example.movies.di
 import androidx.lifecycle.ViewModel
 import com.example.base.activity.ActivityScope
 import com.example.base.viewmodel.ViewModelKey
-import com.example.movies.data.repository.PopularMoviesRepository
-import com.example.movies.data.repository.PopularMoviesRepositoryImpl
-import com.example.movies.domain.PopularMoviesUseCase
-import com.example.movies.domain.PopularMoviesUseCaseImpl
+import com.example.movies.data.repository.BusinessRepository
+import com.example.movies.data.repository.BusinessRepositoryImpl
+import com.example.movies.data.repository.EventsRepository
+import com.example.movies.data.repository.EventsRepositoryImpl
+import com.example.movies.domain.UseCases
+import com.example.movies.domain.UseCasesImpl
 import com.example.movies.presentation.PopularMoviesActivity
 import com.example.movies.viewmodel.PopularMoviesViewModel
 import dagger.Binds
@@ -27,10 +29,13 @@ abstract class MoviesContributeModule {
 abstract class MoviesModule {
 
     @Binds
-    abstract fun bindRepository(repository: PopularMoviesRepositoryImpl): PopularMoviesRepository
+    abstract fun bindBusinessRepository(repository: BusinessRepositoryImpl): BusinessRepository
 
     @Binds
-    abstract fun bindUseCase(userCase: PopularMoviesUseCaseImpl): PopularMoviesUseCase
+    abstract fun bindEventsRepository(repository: EventsRepositoryImpl): EventsRepository
+
+    @Binds
+    abstract fun bindUseCase(userCase: UseCasesImpl): UseCases
 
     @Binds
     @IntoMap

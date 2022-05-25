@@ -24,6 +24,7 @@ class PopularMoviesActivity : AppCompatActivity() {
     }
 
     private fun callApi() {
-        viewModel.getMovies()
+        //viewModel.getBusinessByFoodAndLocation()
+        viewModel.getEvents()
     }
 }
