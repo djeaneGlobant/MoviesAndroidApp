@@ -1,0 +1,25 @@
+query getEvents($limit: Int!) {
+    event_search(limit: $limit) {
+        total
+        events {
+            id
+            location {
+                city
+                state
+                country
+                formatted_address
+            }
+            name
+            cost
+            image_url
+            description
+            time_start
+            time_end
+            business {
+                id
+                name
+                photos
+            }
+        }
+    }
+}
