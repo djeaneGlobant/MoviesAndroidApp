@@ -14,8 +14,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 internal class EventListViewModel @Inject constructor(
-    private val getEventsUseCase: GetEventsUseCase,
-    private val toggleFavoriteUseCase: ToggleFavoriteUseCase
+    private val getEventsUseCaseImpl: GetEventsUseCase,
+    private val toggleFavoriteUseCaseImpl: ToggleFavoriteUseCase
 ) : ViewModel() {
     private val _events: MutableLiveData<List<Event>> = MutableLiveData(emptyList())
     private val _uiState: MutableLiveData<UIState> = MutableLiveData()
@@ -42,7 +42,7 @@ internal class EventListViewModel @Inject constructor(
         _uiState.value = UIState.Loading
         viewModelScope.launch {
             val response = withContext(Dispatchers.IO) {
-                getEventsUseCase(query)
+                getEventsUseCaseImpl.invoke(query)
             }
             when (response) {
                 is DataState.Success -> {
@@ -59,7 +59,7 @@ internal class EventListViewModel @Inject constructor(
 
     private fun toggleFavorite(id: String, isFavorite: Boolean) {
         viewModelScope.launch {
-                toggleFavoriteUseCase(id, isFavorite)
+                toggleFavoriteUseCaseImpl.invoke(id, isFavorite)
         }
     }
 

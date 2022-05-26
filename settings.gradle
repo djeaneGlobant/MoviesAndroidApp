@@ -15,7 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "MoviesAndroidApp"
 include ':app'
-include ':moviedetails'
+//include ':moviedetails'
 include ':network'
 include ':moviesexample'
 include ':base'

@@ -1,6 +1,5 @@
 package com.example.eventlist.data.model
 
-import com.example.eventlist.domain.model.Event
 import com.google.gson.annotations.SerializedName
 
 class EventModel(

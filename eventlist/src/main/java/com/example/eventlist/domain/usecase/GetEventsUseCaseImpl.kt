@@ -5,13 +5,13 @@ import com.example.eventlist.data.network.EventRepository
 import com.example.eventlist.domain.model.Event
 import javax.inject.Inject
 
-interface IGetEventsUseCase {
+interface GetEventsUseCase {
     suspend fun invoke(query: String?): DataState<List<Event>>
 }
 
-class GetEventsUseCase @Inject constructor(
+class GetEventsUseCaseImpl @Inject constructor(
     private val repository: EventRepository
-): IGetEventsUseCase {
+): GetEventsUseCase {
 
     override suspend operator fun invoke(query: String?): DataState<List<Event>> = repository.getAll(query)
 }

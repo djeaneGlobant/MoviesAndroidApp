@@ -6,17 +6,17 @@ import com.example.eventlist.domain.model.*
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
-interface IEventRepository {
+interface EventRepository {
     suspend fun getAll(query: String?): DataState<List<Event>>
     fun setCurrent(event: Event?)
     fun getCurrent(): Event?
     suspend fun toggleFavorite(id: String, isFavorite: Boolean)
 }
 
-class EventRepository @Inject constructor(
+class EventRepositoryImpl @Inject constructor(
     private val helper: EventApi,
     private val db: EventDataBase
-) : IEventRepository {
+) : EventRepository {
     private var current: Event? = null
 
     override suspend fun getAll(query: String?): DataState<List<Event>> {
