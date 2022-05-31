@@ -5,10 +5,7 @@ import com.example.base.activity.ActivityScope
 import com.example.base.viewmodel.ViewModelKey
 import com.example.eventlist.data.network.EventRepository
 import com.example.eventlist.data.network.EventRepositoryImpl
-import com.example.eventlist.domain.usecase.GetEventsUseCaseImpl
-import com.example.eventlist.domain.usecase.GetEventsUseCase
-import com.example.eventlist.domain.usecase.ToggleFavoriteUseCase
-import com.example.eventlist.domain.usecase.ToggleFavoriteUseCaseImpl
+import com.example.eventlist.domain.usecase.*
 import com.example.eventlist.presentation.eventlist.EventListFragment
 import com.example.eventlist.presentation.eventlist.EventListViewModel
 import dagger.Binds
@@ -37,6 +34,9 @@ private abstract class EventListFragmentModule {
 
     @Binds
     abstract fun bindToggleFavoriteUseCase(toggleFavoriteUseCaseImpl: ToggleFavoriteUseCaseImpl): ToggleFavoriteUseCase
+
+    @Binds
+    abstract fun bindGetLocationsUseCase(getLocationsUseCase: GetLocationsUseCaseImpl): GetLocationsUseCase
 
     @Binds
     @IntoMap

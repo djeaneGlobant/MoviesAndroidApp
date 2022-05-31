@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme">
+
+    </style>
+    <style name="ProgressBar">
+        <item name="android:indeterminateTint">@color/primaryColor</item>
+    </style>
+
+    <style name="Theme.EventList">
+
+    </style>
+
+    <style name="Theme.EventList.EmptyEventTextView">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+</resources>

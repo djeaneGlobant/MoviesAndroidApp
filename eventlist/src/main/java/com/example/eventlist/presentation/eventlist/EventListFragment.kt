@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,7 @@ class EventListFragment : Fragment() {
     private val model: EventListViewModel by viewModels { viewModelFactory }
     lateinit var rvFlEvents: RecyclerView
     private lateinit var pbLoading: ProgressBar
+    private lateinit var tvEmptyResults: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,24 +40,30 @@ class EventListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_event_list, container, false)
         pbLoading = view.findViewById(R.id.pbLoading)
         rvFlEvents = view.findViewById(R.id.rvFlEvents)
+        tvEmptyResults = view.findViewById(R.id.tvEmptyResults)
         rvFlEvents.layoutManager = LinearLayoutManager(context)
         model.setStateEvent(EventListStateEvent.SearchEvents())
+        model.getLocations(onLocationsLoaded)
         model.events.observe(viewLifecycleOwner) {
             setMovies(it)
         }
         model.uiState.observe(viewLifecycleOwner) {
+            pbLoading.visibility = View.GONE
+            rvFlEvents.visibility = View.GONE
+            tvEmptyResults.visibility =  View.GONE
             when(it) {
                 is UIState.Success -> {
-                    rvFlEvents.visibility = View.VISIBLE
-                    pbLoading.visibility = View.GONE
+                    if(it.isEmpty) {
+                        tvEmptyResults.visibility =  View.VISIBLE
+                    } else {
+                        rvFlEvents.visibility = View.VISIBLE
+                    }
                 }
                 is UIState.Loading -> {
-                    rvFlEvents.visibility = View.GONE
                     pbLoading.visibility = View.VISIBLE
                 }
                 is UIState.Error -> {
-                    rvFlEvents.visibility = View.VISIBLE
-                    pbLoading.visibility = View.GONE
+                    tvEmptyResults.visibility =  View.VISIBLE
                     val errorMessage = view.resources.getString(R.string.common_ui_error)
                     Snackbar.make(view.rootView, errorMessage, BaseTransientBottomBar.LENGTH_LONG).show()
                 }
@@ -81,16 +89,19 @@ class EventListFragment : Fragment() {
     companion object {
         private var onClickEvent: ((Event) -> Unit)? = null
         private var onClickFavorite: ((String, Boolean) -> Unit)? = null
+        private var onLocationsLoaded: ((List<String>) -> Unit)? = null
 
 
         @JvmStatic
         fun newInstance(
             onClickEvent: ((Event) -> Unit)? = null,
-            onClickFavorite: ((String, Boolean) -> Unit)? = null
+            onClickFavorite: ((String, Boolean) -> Unit)? = null,
+            onLocationsLoaded: ((List<String>) -> Unit)? = null
         ) =
             EventListFragment().apply {
                 Companion.onClickEvent = onClickEvent
                 Companion.onClickFavorite = onClickFavorite
+                Companion.onLocationsLoaded = onLocationsLoaded
             }
     }
 }

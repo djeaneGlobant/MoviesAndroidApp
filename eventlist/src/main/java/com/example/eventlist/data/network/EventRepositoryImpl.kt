@@ -11,10 +11,11 @@ interface EventRepository {
     fun setCurrent(event: Event?)
     fun getCurrent(): Event?
     suspend fun toggleFavorite(id: String, isFavorite: Boolean)
+    suspend fun getLocations(): DataState<List<String>>
 }
 
 class EventRepositoryImpl @Inject constructor(
-    private val helper: EventApi,
+    private val api: EventApi,
     private val db: EventDataBase
 ) : EventRepository {
     private var current: Event? = null
@@ -23,7 +24,7 @@ class EventRepositoryImpl @Inject constructor(
         delay(2000)
         return try {
             val dbEvents = db.eventDao().getAll()
-            val events = helper.getAll(query).results.toDomainList().map { event ->
+            val events = api.getAll(query).results.toDomainList().map { event ->
                 dbEvents.firstOrNull { dbEvent -> dbEvent.id == event.id }?.let { dbEvent ->
                     event.isFavorite = dbEvent.isFavorite
                     event
@@ -51,6 +52,11 @@ class EventRepositoryImpl @Inject constructor(
 
     override suspend fun toggleFavorite(id: String, isFavorite: Boolean) {
         db.eventDao().insert(EventEntity(id, isFavorite))
+    }
+
+    override suspend fun getLocations(): DataState<List<String>> {
+        val locations = api.getLocations().results.map { it.toDomain().location.city }.toSet().toList()
+        return DataState.Success(locations)
     }
 }
 

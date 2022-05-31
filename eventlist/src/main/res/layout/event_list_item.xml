@@ -27,7 +27,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/clDetails"
             app:layout_constraintTop_toTopOf="parent"
-            tools:contentDescription="movie" />
+            />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clDetails"
@@ -57,20 +57,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/tvCity"
-                    tools:text="Title" />
-
-                <TextView
-                    android:id="@+id/tvCity"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:textAlignment="viewStart"
-                    android:textStyle="italic"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvTitle"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     tools:text="Title" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -91,13 +78,13 @@
                 android:id="@+id/ibFavorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_favorite_border"
-                android:contentDescription="like"
+                android:background="@drawable/not_favorite"
                 app:layout_constraintBottom_toTopOf="@id/tvDescription"
                 app:layout_constraintLeft_toRightOf="@id/tvYearOfRelease"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/clTitle"
-                tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+                tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck, ContentDescription"
+                android:scaleType="fitXY"/>
 
             <TextView
                 android:id="@+id/tvDescription"
@@ -118,5 +105,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    />
 </androidx.cardview.widget.CardView>

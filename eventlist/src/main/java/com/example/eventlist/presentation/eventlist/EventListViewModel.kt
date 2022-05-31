@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.eventlist.data.network.DataState
 import com.example.eventlist.domain.model.Event
 import com.example.eventlist.domain.usecase.GetEventsUseCase
+import com.example.eventlist.domain.usecase.GetLocationsUseCase
 import com.example.eventlist.domain.usecase.ToggleFavoriteUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 internal class EventListViewModel @Inject constructor(
     private val getEventsUseCaseImpl: GetEventsUseCase,
-    private val toggleFavoriteUseCaseImpl: ToggleFavoriteUseCase
+    private val toggleFavoriteUseCaseImpl: ToggleFavoriteUseCase,
+    private val getLocationsUseCase: GetLocationsUseCase
 ) : ViewModel() {
     private val _events: MutableLiveData<List<Event>> = MutableLiveData(emptyList())
     private val _uiState: MutableLiveData<UIState> = MutableLiveData()
@@ -47,7 +49,7 @@ internal class EventListViewModel @Inject constructor(
             when (response) {
                 is DataState.Success -> {
                     _events.value = response.data!!
-                    _uiState.value = UIState.Success
+                    _uiState.value = UIState.Success(response.data.isNullOrEmpty())
                 }
                 is DataState.Failure -> {
                     response.exception.printStackTrace()
@@ -59,7 +61,20 @@ internal class EventListViewModel @Inject constructor(
 
     private fun toggleFavorite(id: String, isFavorite: Boolean) {
         viewModelScope.launch {
-                toggleFavoriteUseCaseImpl.invoke(id, isFavorite)
+            toggleFavoriteUseCaseImpl.invoke(id, isFavorite)
+        }
+    }
+
+    fun getLocations(onLocationsLoaded: ((List<String>) -> Unit)?) {
+        viewModelScope.launch {
+            when (val response = getLocationsUseCase.invoke()) {
+                is DataState.Success -> {
+                    onLocationsLoaded?.invoke(response.data!!)
+                }
+                is DataState.Failure -> {
+                    response.exception.printStackTrace()
+                }
+            }
         }
     }
 
@@ -71,7 +86,7 @@ internal sealed class EventListStateEvent {
 }
 
 internal sealed class UIState {
-    object Success : UIState()
+    class Success(val isEmpty: Boolean) : UIState()
     object Error : UIState()
     object Loading : UIState()
 }

@@ -1,5 +1,6 @@
 package com.example.eventlist.presentation.eventlist
 
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.example.eventlist.R
 import com.example.eventlist.domain.model.Event
 import com.squareup.picasso.Picasso
@@ -36,7 +38,6 @@ internal class EventListAdapter(
 
         private val ivMovieImage = view.findViewById<ImageView>(R.id.ivMovieImage)
         private val tvTitle = view.findViewById<TextView>(R.id.tvTitle)
-        private val tvCity = view.findViewById<TextView>(R.id.tvCity)
         private val tvYearOfRelease = view.findViewById<TextView>(R.id.tvYearOfRelease)
         private val tvDescription = view.findViewById<TextView>(R.id.tvDescription)
         private val ibFavorite = view.findViewById<ImageButton>(R.id.ibFavorite)
@@ -45,13 +46,25 @@ internal class EventListAdapter(
             with(event) {
                 Picasso.get().load(imageUrl).error(R.drawable.error_loaded_image).into(ivMovieImage)
                 tvTitle.text = name
-                tvCity.text = "(${location.city})"
                 tvDescription.text = description
                 tvYearOfRelease.text = toFormat(event.timeStart)
                 ibFavorite.setBackgroundResource(getResource(isFavorite))
+                animate(ibFavorite)
                 view.setOnClickListener { onClickMovie(event) }
                 ibFavorite.setOnClickListener {
                     toggleFavorite(event)
+                    animate(it)
+                }
+            }
+        }
+
+        private fun animate(_view: View) {
+            when (val drawable = _view.background) {
+                is AnimatedVectorDrawableCompat -> {
+                    drawable.start()
+                }
+                is AnimatedVectorDrawable -> {
+                    drawable.start()
                 }
             }
         }
@@ -64,7 +77,7 @@ internal class EventListAdapter(
         }
 
         private fun getResource(isFavorite: Boolean): Int {
-            return if(isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border
+            return if(isFavorite) R.drawable.favorite else R.drawable.not_favorite
         }
 
         private fun toFormat(dateString: String): String {

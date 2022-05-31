@@ -17,6 +17,16 @@
        android:layout_height="120dp"
        android:layout_gravity="center"
        android:visibility="gone"
+       style="@style/ProgressBar"
+       />
+
+   <TextView
+       android:id="@+id/tvEmptyResults"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:text="@string/fragment_event_empty_data_text"
+       android:visibility="gone"
+       style="@style/Theme.EventList.EmptyEventTextView"
        />
 
 </FrameLayout>
