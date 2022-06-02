@@ -4,7 +4,8 @@ import dagger.Module
 
 @Module(
     includes = [
-        EventListContributeModule::class
+        EventListContributeModule::class,
+        BusinessListContributeModule::class
     ]
 )
 class EventListModule
