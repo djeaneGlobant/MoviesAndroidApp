@@ -1,4 +1,4 @@
-package com.example.eventlist.data.database.entity
+package com.example.localstorage.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

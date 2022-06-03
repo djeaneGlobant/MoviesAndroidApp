@@ -1,10 +1,10 @@
-package com.example.eventlist.data.database.dao
+package com.example.localstorage.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.eventlist.data.database.entity.EventEntity
+import com.example.localstorage.entity.EventEntity
 
 @Dao
 interface EventDao {
