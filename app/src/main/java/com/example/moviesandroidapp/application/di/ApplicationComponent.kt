@@ -3,6 +3,7 @@ package com.example.moviesandroidapp.application.di
 import android.app.Application
 import com.example.base.viewmodel.di.ViewModelModule
 import com.example.eventlist.di.EventListModule
+import com.example.localstorage.di.LocalStorageModule
 import com.example.moviesandroidapp.application.MoviesAndroidApp
 import com.example.networkmodule.di.NetworkModule
 import dagger.BindsInstance
@@ -20,6 +21,7 @@ import javax.inject.Singleton
         FeatureModule::class,
         ViewModelModule::class,
         EventListModule::class,
+        LocalStorageModule::class
     ]
 )
 interface ApplicationComponent : AndroidInjector<MoviesAndroidApp> {

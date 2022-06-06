@@ -1,9 +1,9 @@
 package com.example.eventlist.data.network
 
-import com.example.eventlist.data.database.EventDataBase
-import com.example.eventlist.data.database.entity.EventEntity
 import com.example.eventlist.domain.model.*
 import com.example.networkmodule.api.BusinessApi
+import com.example.localstorage.database.EventDataBase
+import com.example.localstorage.entity.EventEntity
 import com.example.networkmodule.model.DataState
 import kotlinx.coroutines.delay
 import javax.inject.Inject

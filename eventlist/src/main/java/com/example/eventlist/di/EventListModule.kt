@@ -5,7 +5,6 @@ import dagger.Module
 @Module(
     includes = [
         NetworkModule::class,
-        EventDbModule::class,
         EventListContributeModule::class
     ]
 )
