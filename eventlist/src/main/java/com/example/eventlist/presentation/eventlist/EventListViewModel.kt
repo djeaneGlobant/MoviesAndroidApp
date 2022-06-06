@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eventlist.data.network.DataState
+import com.example.networkmodule.model.DataState
 import com.example.eventlist.domain.model.Event
 import com.example.eventlist.domain.usecase.GetEventsUseCase
 import com.example.eventlist.domain.usecase.GetLocationsUseCase
@@ -17,7 +17,8 @@ import javax.inject.Inject
 internal class EventListViewModel @Inject constructor(
     private val getEventsUseCaseImpl: GetEventsUseCase,
     private val toggleFavoriteUseCaseImpl: ToggleFavoriteUseCase,
-    private val getLocationsUseCase: GetLocationsUseCase
+    private val getLocationsUseCase: GetLocationsUseCase,
+
 ) : ViewModel() {
     private val _events: MutableLiveData<List<Event>> = MutableLiveData(emptyList())
     private val _uiState: MutableLiveData<UIState> = MutableLiveData()

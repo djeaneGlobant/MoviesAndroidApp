@@ -23,11 +23,11 @@ class PopularMoviesViewModel @Inject constructor(
 
     fun getEvents() {
         viewModelScope.launch {
-            get.eventUseCase()?.let {
+            /*get.eventUseCase()?.let {
                 if(it.eventSearch.events?.isNotEmpty() != null) {
 
                 }
-            }
+            }*/
         }
     }
 }
