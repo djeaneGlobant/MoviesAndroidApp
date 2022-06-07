@@ -1,8 +1,10 @@
 package com.example.eventlist.data.network
 
 import com.example.eventlist.domain.model.*
+import com.example.networkmodule.api.BusinessApi
 import com.example.localstorage.database.EventDataBase
 import com.example.localstorage.entity.EventEntity
+import com.example.networkmodule.model.DataState
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
@@ -15,10 +17,12 @@ interface EventRepository {
 }
 
 class EventRepositoryImpl @Inject constructor(
-    private val api: EventApi,
+    private val api: BusinessApi,
     private val db: EventDataBase
 ) : EventRepository {
     private var current: Event? = null
+
+    //TODO- CHANGE ALL METHODS HERE USING NEW api AND NEW DATA USING GRAPHQL
 
     override suspend fun getAll(query: String?): DataState<List<Event>> {
         delay(2000)

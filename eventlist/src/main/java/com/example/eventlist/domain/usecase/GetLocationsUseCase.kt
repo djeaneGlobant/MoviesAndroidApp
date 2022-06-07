@@ -1,6 +1,6 @@
 package com.example.eventlist.domain.usecase
 
-import com.example.eventlist.data.network.DataState
+import com.example.networkmodule.model.DataState
 import com.example.eventlist.data.network.EventRepository
 import javax.inject.Inject
 

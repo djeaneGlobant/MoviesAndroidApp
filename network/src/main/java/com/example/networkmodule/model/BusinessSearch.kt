@@ -3,36 +3,36 @@ package com.example.networkmodule.model
 import com.google.gson.annotations.SerializedName
 
 data class BusinessData(
-    val search: BusinessSearch
+    @SerializedName("search") val search: BusinessSearch
 )
 
 data class BusinessSearch(
-    val total: Int? = 0,
-    val business: List<Business>? = emptyList()
+    @SerializedName("total") val total: Int? = 0,
+    @SerializedName("business") val business: List<Business>? = emptyList()
 )
 
 data class Business(
-    val id: String,
-    val name: String,
+    @SerializedName("id") val id: String,
+    @SerializedName("name") val name: String,
     @SerializedName("photos") val imageRestaurant: List<String>? = emptyList(),
-    val rating: Double? = null,
-    val phone: String? = null,
-    val hours: List<Hours>? = emptyList(),
-    val reviews: List<Review>? = emptyList()
+    @SerializedName("rating") val rating: Double? = null,
+    @SerializedName("phone") val phone: String? = null,
+    @SerializedName("hours") val hours: List<Hours>? = emptyList(),
+    @SerializedName("reviews") val reviews: List<Review>? = emptyList()
 )
 
 data class Hours(
-    val open: List<OpenHours>? = emptyList()
+    @SerializedName("open") val open: List<OpenHours>? = emptyList()
 )
 
 data class OpenHours(
-    val day: Int,
-    val start: String? = null,
-    val end: String? = null
+    @SerializedName("day") val day: Int,
+    @SerializedName("start") val start: String? = null,
+    @SerializedName("end") val end: String? = null
 )
 data class Review(
     @SerializedName("text") val comment: String? = null,
-    val rating: Int? = 0,
+    @SerializedName("rating") val rating: Int? = 0,
     @SerializedName("time_created") val timeCreated: String? = null,
-    val url: String? = null
+    @SerializedName("url") val url: String? = null
 )

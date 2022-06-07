@@ -1,4 +1,4 @@
-package com.example.eventlist.data.network
+package com.example.networkmodule.model
 
 sealed class DataState<out T> {
     data class Success<T>(val data: T?): DataState<T>()
