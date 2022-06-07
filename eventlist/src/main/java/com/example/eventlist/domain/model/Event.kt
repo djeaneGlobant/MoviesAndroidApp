@@ -1,7 +1,5 @@
 package com.example.eventlist.domain.model
 
-import com.example.eventlist.data.model.EventModel
-
 class Event(
     val id: String,
     val imageUrl: String?,
@@ -12,6 +10,5 @@ class Event(
     val location: Address
 )
 
-fun EventModel.toDomain() = Event(id, imageUrl, name, timeStart, description, location = location.toDomain())
 
-fun List<EventModel>.toDomainList() = map { it.toDomain() }
+internal fun com.example.networkmodule.model.Event.toDomain() = Event(id ?: "", imagePost, name ?: "", timeStart ?: "", description ?: "", false, location!!.toDomain())

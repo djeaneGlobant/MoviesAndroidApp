@@ -1,6 +1,6 @@
 package com.example.eventlist.domain.usecase
 
-import com.example.eventlist.data.network.EventRepository
+import com.example.eventlist.data.repository.EventRepository
 import javax.inject.Inject
 
 interface ToggleFavoriteUseCase {

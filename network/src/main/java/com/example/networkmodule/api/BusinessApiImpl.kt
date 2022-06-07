@@ -1,11 +1,13 @@
 package com.example.networkmodule.api
 
 import com.apollographql.apollo3.ApolloClient
+import com.example.network.GetCategoriesQuery
+import com.example.network.GetEventLocationsQuery
 import com.example.network.GetEventsQuery
 import com.example.network.SearchByFoodAndPlaceQuery
 import com.example.networkmodule.model.EventData
 import com.example.networkmodule.model.BusinessData
-import com.example.networkmodule.model.DataState
+import com.example.networkmodule.model.CategoryData
 import com.example.networkmodule.util.mapToObject
 import com.google.gson.Gson
 
@@ -18,21 +20,40 @@ class BusinessApiImpl(
         private const val LIMIT_EVENTS = 100
     }
 
-    override suspend fun getBusinessByFoodAndLocation(term: String, location: String): DataState<BusinessData> {
+    override suspend fun getBusinessByFoodAndLocation(term: String, location: String): BusinessData {
         val response = apolloClient.query(SearchByFoodAndPlaceQuery(term, location)).execute()
         return if (response.hasErrors().not()) {
-            DataState.Success(gson.mapToObject(response.data))
+            gson.mapToObject(response.data)
         } else {
-            DataState.Failure(Exception(response.errors?.first()?.message ?: ""))
+            throw Exception(response.errors?.first()?.message ?: "")
         }
     }
 
-    override suspend fun getEvents(): DataState<EventData> {
+    override suspend fun getEvents(): EventData {
         val response = apolloClient.query(GetEventsQuery(LIMIT_EVENTS)).execute()
         return if (response.hasErrors().not()) {
-            DataState.Success(gson.mapToObject(response.data))
+            gson.mapToObject(response.data)
         } else {
-            DataState.Failure(Exception(response.errors?.first()?.message ?: ""))
+            throw Exception(response.errors?.first()?.message ?: "")
         }
     }
+
+    override suspend fun getEventLocations(): EventData {
+        val response = apolloClient.query(GetEventLocationsQuery(LIMIT_EVENTS)).execute()
+        return if(response.hasErrors().not()) {
+            gson.mapToObject(response.data)
+        } else {
+            throw Exception(response.errors?.first()?.message ?: "has occurred an error")
+        }
+    }
+
+    override suspend fun getCategories(): CategoryData {
+        val response = apolloClient.query(GetCategoriesQuery()).execute()
+        return if(response.hasErrors().not()) {
+            gson.mapToObject(response.data)
+        } else {
+            throw Exception(response.errors?.first()?.message ?: "has occurred an error")
+        }
+    }
+
 }

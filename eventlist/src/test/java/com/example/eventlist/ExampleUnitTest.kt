@@ -3,6 +3,8 @@ package com.example.eventlist
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -13,5 +15,15 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+    }
+
+    @Test
+    fun should_convert_time_correctly() {
+        val dateString = "2016-12-05 08:30"
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+        val date = formatter.parse(dateString)!!
+        formatter.applyPattern("E MMM d, yyyy")
+        println("result: ${formatter.format(date)}")
+
     }
 }

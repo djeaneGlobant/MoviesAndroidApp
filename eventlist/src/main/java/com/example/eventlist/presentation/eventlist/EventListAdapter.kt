@@ -77,15 +77,13 @@ internal class EventListAdapter(
         }
 
         private fun getResource(isFavorite: Boolean): Int {
-            return if(isFavorite) R.drawable.favorite else R.drawable.not_favorite
+            return if (isFavorite) R.drawable.favorite else R.drawable.not_favorite
         }
 
+        @Suppress("DEPRECATION")
         private fun toFormat(dateString: String): String {
-            val datePath = dateString.substring(0, 19)
-            val tzPath = dateString.substring(20).replace(":", "")
-            val dateStringClean = "$datePath-$tzPath"
-            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", view.context.resources.configuration.locale)
-            val date = formatter.parse(dateStringClean)!!
+            val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm", view.context.resources.configuration.locale)
+            val date = formatter.parse(dateString)!!
             formatter.applyPattern("E MMM d, yyyy")
             return formatter.format(date)
         }

@@ -1,11 +1,10 @@
-package com.example.eventlist.data.network
+package com.example.eventlist.data.repository
 
 import com.example.eventlist.domain.model.*
 import com.example.networkmodule.api.BusinessApi
 import com.example.localstorage.database.EventDataBase
 import com.example.localstorage.entity.EventEntity
-import com.example.networkmodule.model.DataState
-import kotlinx.coroutines.delay
+import com.example.eventlist.util.DataState
 import javax.inject.Inject
 
 interface EventRepository {
@@ -22,30 +21,22 @@ class EventRepositoryImpl @Inject constructor(
 ) : EventRepository {
     private var current: Event? = null
 
-    //TODO- CHANGE ALL METHODS HERE USING NEW api AND NEW DATA USING GRAPHQL
 
     override suspend fun getAll(query: String?): DataState<List<Event>> {
-        delay(2000)
         return try {
             val dbEvents = db.eventDao().getAll()
-            val events = api.getAll(query).results.toDomainList().map { event ->
-                dbEvents.firstOrNull { dbEvent -> dbEvent.id == event.id }?.let { dbEvent ->
-                    event.isFavorite = dbEvent.isFavorite
-                    event
-                } ?: event
+            val events = api.getEvents().eventSearch.events?.map { it.toDomain() }
+            if (dbEvents.isNotEmpty()) {
+                events?.forEach { event ->
+                    dbEvents.firstOrNull { dbEvent -> dbEvent.id == event.id }?.let { dbEvent ->
+                        event.isFavorite = dbEvent.isFavorite
+                    }
+                }
             }
-            DataState.Success(events.searchQuery(query))
+            DataState.Success(events)
         } catch (e: Exception) {
             DataState.Failure(e)
         }
-    }
-
-    private fun List<Event>.searchQuery(query: String?): List<Event> {
-        return query?.let {
-            filter {
-                it.location.toString().lowercase().contains(query.lowercase())
-            }
-        } ?: this
     }
 
     override fun setCurrent(event: Event?) {
@@ -59,8 +50,15 @@ class EventRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getLocations(): DataState<List<String>> {
-        val locations = api.getLocations().results.map { it.toDomain().location.city }.toSet().toList()
-        return DataState.Success(locations)
+        return try {
+            val locations =
+                api.getEventLocations().eventSearch.events?.map { it.toDomain().location.city }
+                    ?.toSet()
+                    ?.toList()
+            DataState.Success(locations ?: emptyList())
+        } catch (e: Exception) {
+            DataState.Failure(e)
+        }
     }
 }
 

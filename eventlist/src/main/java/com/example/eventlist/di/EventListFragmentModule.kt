@@ -3,8 +3,8 @@ package com.example.eventlist.di
 import androidx.lifecycle.ViewModel
 import com.example.base.activity.ActivityScope
 import com.example.base.viewmodel.ViewModelKey
-import com.example.eventlist.data.network.EventRepository
-import com.example.eventlist.data.network.EventRepositoryImpl
+import com.example.eventlist.data.repository.EventRepository
+import com.example.eventlist.data.repository.EventRepositoryImpl
 import com.example.eventlist.domain.usecase.*
 import com.example.eventlist.presentation.eventlist.EventListFragment
 import com.example.eventlist.presentation.eventlist.EventListViewModel

@@ -12,7 +12,7 @@ data class EventSearch(
 )
 
 data class Event(
-    @SerializedName("id") val id: String,
+    @SerializedName("id") val id: String?,
     @SerializedName("location") val location: Location? = null,
     @SerializedName("name") val name: String? = null,
     @SerializedName("cost") val cost: Int? = 0,

@@ -3,7 +3,6 @@ package com.example.movies.domain
 import com.example.movies.data.repository.BusinessRepository
 import com.example.movies.data.repository.EventsRepository
 import com.example.networkmodule.model.BusinessData
-import com.example.networkmodule.model.DataState
 import com.example.networkmodule.model.EventData
 import javax.inject.Inject
 
@@ -12,9 +11,9 @@ interface UseCases {
     suspend fun businessUseCase(
         foodType: String,
         location: String
-    ) : BusinessData?
+    ) : BusinessData
 
-    suspend fun eventUseCase(): DataState<EventData>
+    suspend fun eventUseCase(): EventData
 }
 
 class UseCasesImpl @Inject constructor(
@@ -25,9 +24,9 @@ class UseCasesImpl @Inject constructor(
     override suspend fun businessUseCase(
         foodType: String,
         location: String
-    ): BusinessData? =
+    ): BusinessData =
         businessRepository.getBusinessByFoodAndLocation(foodType, location)
 
-    override suspend fun eventUseCase(): DataState<EventData> =
+    override suspend fun eventUseCase(): EventData =
         eventsRepository.getEvents()
 }

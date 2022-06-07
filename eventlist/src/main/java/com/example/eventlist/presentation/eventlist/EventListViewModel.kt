@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.networkmodule.model.DataState
+import com.example.eventlist.util.DataState
 import com.example.eventlist.domain.model.Event
 import com.example.eventlist.domain.usecase.GetEventsUseCase
 import com.example.eventlist.domain.usecase.GetLocationsUseCase
