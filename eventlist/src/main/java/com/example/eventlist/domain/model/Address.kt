@@ -6,4 +6,4 @@ data class Address(
     val state: String
 )
 
-internal fun com.example.networkmodule.model.Location.toDomain() = Address(city!!, state!!, country!!)
+internal fun com.example.networkmodule.model.Location.toDomain() = Address(city ?: "", state ?: "", country ?: "")

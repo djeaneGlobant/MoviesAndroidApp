@@ -3,10 +3,9 @@ package com.example.eventlist.di
 import androidx.lifecycle.ViewModel
 import com.example.base.activity.ActivityScope
 import com.example.base.viewmodel.ViewModelKey
-import com.example.eventlist.data.network.BusinessRepository
-import com.example.eventlist.data.network.BusinessRepositoryImpl
-import com.example.eventlist.domain.usecase.GetBusinessByFoodAndLocationUseCase
-import com.example.eventlist.domain.usecase.GetBusinessByFoodAndLocationsUseCaseImpl
+import com.example.eventlist.data.repository.BusinessRepository
+import com.example.eventlist.data.repository.BusinessRepositoryImpl
+import com.example.eventlist.domain.usecase.business.*
 import com.example.eventlist.presentation.businesslist.BusinessListFragment
 import com.example.eventlist.presentation.businesslist.BusinessListViewModel
 import dagger.Binds
@@ -31,7 +30,16 @@ private abstract class BusinessListFragmentModule {
     abstract fun bindRepository(repositoryImpl: BusinessRepositoryImpl): BusinessRepository
 
     @Binds
-    abstract fun bindGetBusinessByFoodAndLocationUseCase(useCaseImpl: GetBusinessByFoodAndLocationsUseCaseImpl): GetBusinessByFoodAndLocationUseCase
+    abstract fun bindGetBusiness(useCaseImpl: GetBusinessImpl): GetBusiness
+
+    @Binds
+    abstract fun bindGetLocations(useCaseImpl: GetLocationsImpl): GetLocations
+
+    @Binds
+    abstract fun bindGetCategories(useCaseImpl: GetCategoriesImpl): GetCategories
+
+    @Binds
+    abstract fun bindToggleFavorite(useCaseImpl: ToggleFavoriteImpl): ToggleFavorite
 
     @Binds
     @IntoMap

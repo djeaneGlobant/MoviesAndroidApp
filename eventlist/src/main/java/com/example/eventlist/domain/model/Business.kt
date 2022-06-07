@@ -7,7 +7,8 @@ data class Business(
     val rating: Double? = null,
     val phone: String? = null,
     val hours: List<Hours>? = emptyList(),
-    val reviews: List<Review>? = emptyList()
+    val reviews: List<Review>? = emptyList(),
+    var isFavorite: Boolean = false
 ) {
 
 

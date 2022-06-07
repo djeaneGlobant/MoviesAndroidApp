@@ -20,6 +20,6 @@ data class Category(
 )
 
 data class CategoryParent(
-    @SerializedName("parent_categories")
+    @SerializedName("title")
     val title: String
 )

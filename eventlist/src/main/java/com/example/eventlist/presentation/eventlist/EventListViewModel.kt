@@ -9,6 +9,7 @@ import com.example.eventlist.domain.model.Event
 import com.example.eventlist.domain.usecase.GetEventsUseCase
 import com.example.eventlist.domain.usecase.GetLocationsUseCase
 import com.example.eventlist.domain.usecase.ToggleFavoriteUseCase
+import com.example.eventlist.presentation.util.UIState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -84,10 +85,4 @@ internal class EventListViewModel @Inject constructor(
 internal sealed class EventListStateEvent {
     class SearchEvents(val query: String? = null) : EventListStateEvent()
     class ToggleFavorite(val id: String, val isFavorite: Boolean) : EventListStateEvent()
-}
-
-internal sealed class UIState {
-    class Success(val isEmpty: Boolean) : UIState()
-    object Error : UIState()
-    object Loading : UIState()
 }

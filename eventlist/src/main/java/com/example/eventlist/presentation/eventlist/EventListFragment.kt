@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.base.viewmodel.ViewModelFactory
 import com.example.eventlist.domain.model.Event
 import com.example.eventlist.R
+import com.example.eventlist.presentation.util.UIState
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.AndroidSupportInjection
@@ -24,7 +25,7 @@ class EventListFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelFactory
 
     private val model: EventListViewModel by viewModels { viewModelFactory }
-    lateinit var rvFlEvents: RecyclerView
+    private lateinit var rvFlEvents: RecyclerView
     private lateinit var pbLoading: ProgressBar
     private lateinit var tvEmptyResults: TextView
 
@@ -74,8 +75,8 @@ class EventListFragment : Fragment() {
 
     private fun setMovies(events: List<Event>) {
         rvFlEvents.adapter = EventListAdapter(events,
-            onClickMovie = { movie ->
-                onClickEvent?.invoke(movie)
+            onClickEvent = { event ->
+                onClickEvent?.invoke(event)
             }, onClickFavorite = { id, isFavorite ->
                 model.setStateEvent(EventListStateEvent.ToggleFavorite(id, isFavorite))
                 onClickFavorite?.invoke(id, isFavorite)

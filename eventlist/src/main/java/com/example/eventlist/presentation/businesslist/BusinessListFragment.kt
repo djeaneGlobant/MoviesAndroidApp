@@ -4,12 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.base.viewmodel.ViewModelFactory
 import com.example.eventlist.R
+import com.example.eventlist.domain.model.Business
+import com.example.eventlist.presentation.util.UIState
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -20,7 +26,8 @@ class BusinessListFragment : Fragment() {
     private val model: BusinessListViewModel by viewModels { viewModelFactory }
 
     private lateinit var rvFlBusiness: RecyclerView
-
+    private lateinit var pbLoading: ProgressBar
+    private lateinit var tvEmptyResults: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,24 +38,78 @@ class BusinessListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_business_list, container, false)
+        pbLoading = view.findViewById(R.id.pbLoading)
+        tvEmptyResults = view.findViewById(R.id.tvEmptyResults)
         rvFlBusiness = view.findViewById(R.id.rvFlBusiness)
         rvFlBusiness.layoutManager = LinearLayoutManager(context)
-
-        model.loadBusiness()
+        onLocationsLoaded?.run { model.setStateEvent(BusinessListStateEvent.LoadLocations(this)) }
+        onCategoriesLoaded?.run { model.setStateEvent(BusinessListStateEvent.LoadCategories(this)) }
+        model.setStateEvent(BusinessListStateEvent.LoadBusiness())
         model.business.observe(viewLifecycleOwner) {
-            val adapter = BusinessListAdapter(it)
+            val adapter = BusinessListAdapter(
+                it,
+                onClickFavorite = { id, isFavorite ->
+                    model.setStateEvent(BusinessListStateEvent.ToggleFavorite(id, isFavorite))
+                    onClickFavorite?.invoke(id, isFavorite)
+                }, onClickBusiness = { business ->
+                    onClickBusiness?.invoke(business)
+                }
+            )
             rvFlBusiness.adapter = adapter
         }
+        model.uiState.observe(viewLifecycleOwner, ::manageUiState)
 
         return view
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BusinessListFragment().apply {
+    private fun manageUiState(uiState: UIState) {
+        pbLoading.visibility = View.GONE
+        tvEmptyResults.visibility = View.GONE
+        rvFlBusiness.visibility = View.GONE
+        when (uiState) {
+            is UIState.Success -> {
+                if (uiState.isEmpty) {
+                    tvEmptyResults.visibility = View.VISIBLE
+                } else {
+                    rvFlBusiness.visibility = View.VISIBLE
+                }
             }
+            is UIState.Loading -> {
+                pbLoading.visibility = View.VISIBLE
+            }
+            is UIState.Error -> {
+                tvEmptyResults.visibility = View.VISIBLE
+                requireView().resources?.getString(R.string.common_ui_error)?.apply {
+                    Snackbar.make(requireView().rootView, this, BaseTransientBottomBar.LENGTH_LONG)
+                        .show()
+                }
+            }
+        }
     }
+
+    fun searchBusiness(term: String, location: String) {
+        model.setStateEvent(BusinessListStateEvent.LoadBusiness(term, location))
+    }
+
+    companion object {
+        private var onLocationsLoaded: ((List<String>) -> Unit)? = null
+        private var onCategoriesLoaded: ((List<String>) -> Unit)? = null
+        private var onClickFavorite: ((String, Boolean) -> Unit)? = null
+        private var onClickBusiness: ((Business) -> Unit)? = null
+
+        @JvmStatic
+        fun newInstance(
+            onClickFavorite: ((String, Boolean) -> Unit)? = null,
+            onClickBusiness: ((Business) -> Unit)? = null,
+            onLocationsLoaded: ((List<String>) -> Unit)? = null,
+            onCategoriesLoaded: ((List<String>) -> Unit)? = null,
+        ) = BusinessListFragment().apply {
+            Companion.onCategoriesLoaded = onCategoriesLoaded
+            Companion.onLocationsLoaded = onLocationsLoaded
+            Companion.onClickBusiness = onClickBusiness
+            Companion.onClickFavorite = onClickFavorite
+        }
+    }
+
 }
