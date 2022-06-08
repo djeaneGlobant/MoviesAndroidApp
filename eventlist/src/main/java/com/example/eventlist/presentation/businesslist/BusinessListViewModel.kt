@@ -104,7 +104,7 @@ internal class BusinessListViewModel @Inject constructor(
 
 
 internal sealed class BusinessListStateEvent {
-    class LoadBusiness(val term: String = "food", val location: String = "New York City") : BusinessListStateEvent()
+    class LoadBusiness(val term: String, val location: String) : BusinessListStateEvent()
     class LoadCategories(val onLoad: (List<String>) -> Unit) : BusinessListStateEvent()
     class LoadLocations(val onLoad: (List<String>) -> Unit) : BusinessListStateEvent()
     class ToggleFavorite(val id: String, val isFavorite: Boolean) : BusinessListStateEvent()

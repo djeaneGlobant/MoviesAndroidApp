@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BottomNavigation">
+        <item name="itemIconTint">@color/navigation_text_color</item>
+        <item name="itemTextColor">@color/navigation_text_color</item>
+        <item name="itemRippleColor">@color/primaryColor</item>
+        <!--        <item name="hintTextColor">@color/navigation_text_color</item>-->
+    </style>
+</resources>

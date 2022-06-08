@@ -1,0 +1,6 @@
+<resources>
+    <declare-styleable name="SearchBar">
+        <attr name="hint" format="string" />
+        <attr name="helperVisible" format="boolean" />
+    </declare-styleable>
+</resources>

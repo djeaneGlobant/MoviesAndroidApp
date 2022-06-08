@@ -45,7 +45,7 @@ class BusinessListFragment : Fragment() {
         rvFlBusiness.layoutManager = LinearLayoutManager(context)
         onLocationsLoaded?.run { model.setStateEvent(BusinessListStateEvent.LoadLocations(this)) }
         onCategoriesLoaded?.run { model.setStateEvent(BusinessListStateEvent.LoadCategories(this)) }
-        model.setStateEvent(BusinessListStateEvent.LoadBusiness())
+        searchBusiness()
         model.business.observe(viewLifecycleOwner) {
             val adapter = BusinessListAdapter(
                 it,
@@ -88,8 +88,10 @@ class BusinessListFragment : Fragment() {
         }
     }
 
-    fun searchBusiness(term: String, location: String) {
-        model.setStateEvent(BusinessListStateEvent.LoadBusiness(term, location))
+    fun searchBusiness(term: String? = null, location: String? = null) {
+        val currentTerm = term ?: "food"
+        val currentLocation = location ?: "New York City"
+        model.setStateEvent(BusinessListStateEvent.LoadBusiness(currentTerm, currentLocation))
     }
 
     companion object {

@@ -1,0 +1,8 @@
+<resources>
+    <string name="title_events">Events</string>
+    <string name="title_business">Business</string>
+    <string name="app_name">TabTesting</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_bar_hint">search events/places by location</string>
+    <string name="search_fragment_helper_location">location: not selected</string>
+</resources>
