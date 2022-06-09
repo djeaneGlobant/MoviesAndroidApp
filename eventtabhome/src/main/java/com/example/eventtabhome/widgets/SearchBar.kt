@@ -20,6 +20,7 @@ class SearchBar(context: Context, attrs: AttributeSet?) : ConstraintLayout(conte
     private var tilSearch: TextInputLayout
     private var tvLocation: TextView
     private var hint: String? = null
+    private var inputHint: String? = null
     private var helperVisible: Boolean? = null
     private var onSelectedOption: ((String) -> Unit)? = null
 
@@ -36,9 +37,11 @@ class SearchBar(context: Context, attrs: AttributeSet?) : ConstraintLayout(conte
         ).apply {
             try {
                 hint = getString(R.styleable.SearchBar_hint)
+                inputHint = getString(R.styleable.SearchBar_input_hint)
                 helperVisible = getBoolean(R.styleable.SearchBar_helperVisible, false)
-                tvLocation.visibility = if(helperVisible == true) View.VISIBLE else View.GONE
-                tilSearch.editText?.hint = hint
+                tvLocation.visibility = if (helperVisible == true) View.VISIBLE else View.GONE
+                tilSearch.hint = hint
+                tilSearch.editText?.hint = inputHint
             } finally {
                 recycle()
             }
@@ -75,8 +78,10 @@ class SearchBar(context: Context, attrs: AttributeSet?) : ConstraintLayout(conte
         onSelectedOption?.invoke(query)
         tilSearch.editText?.hint = query
         tilSearch.editText?.setText("")
+        tilSearch.isExpandedHintEnabled = false
         (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).run {
             hideSoftInputFromWindow(this@SearchBar.windowToken, 0)
+            clearFocus()
         }
     }
 }

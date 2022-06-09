@@ -25,7 +25,7 @@ class EventRepositoryImpl @Inject constructor(
     override suspend fun getAll(query: String?): DataState<List<Event>> {
         return try {
             val dbEvents = db.eventDao().getAll()
-            val events = api.getEvents().eventSearch.events?.map { it.toDomain() }
+            val events = api.getEvents(query).eventSearch.events?.map { it.toDomain() }
             if (dbEvents.isNotEmpty()) {
                 events?.forEach { event ->
                     dbEvents.firstOrNull { dbEvent -> dbEvent.id == event.id }?.let { dbEvent ->

@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
 import com.airbnb.lottie.LottieAnimationView
+import com.example.eventtabhome.presentation.EventHomeTabActivity
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -19,10 +20,10 @@ class SplashScreenActivity : AppCompatActivity() {
         handler = Handler(Looper.myLooper()!!)
 
         handler.postDelayed({
-            val intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this, EventHomeTabActivity::class.java)
             startActivity(intent)
             finish()
-        },8000)
+        }, 8000)
 
     }
 }

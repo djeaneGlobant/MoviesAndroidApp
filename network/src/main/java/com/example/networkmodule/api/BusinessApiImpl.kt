@@ -29,8 +29,8 @@ class BusinessApiImpl(
         }
     }
 
-    override suspend fun getEvents(): EventData {
-        val response = apolloClient.query(GetEventsQuery(LIMIT_EVENTS)).execute()
+    override suspend fun getEvents(location: String?): EventData {
+        val response = apolloClient.query(GetEventsQuery(LIMIT_EVENTS, location ?: "")).execute()
         return if (response.hasErrors().not()) {
             gson.mapToObject(response.data)
         } else {

@@ -15,7 +15,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:startIconDrawable="@drawable/ic_search_24">
+        app:startIconDrawable="@drawable/ic_location_24"
+        tools:hint="@string/search_bar_hint"
+        >
 
         <AutoCompleteTextView
             android:layout_width="match_parent"
@@ -24,7 +26,6 @@
             android:labelFor="@id/tilSearch"
             android:maxLines="1"
             android:lines="1"
-            tools:hint="@string/search_bar_hint"
             tools:ignore="LabelFor" />
     </com.google.android.material.textfield.TextInputLayout>
 

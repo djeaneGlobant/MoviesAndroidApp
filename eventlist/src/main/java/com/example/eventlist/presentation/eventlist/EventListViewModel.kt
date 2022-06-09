@@ -16,11 +16,11 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 internal class EventListViewModel @Inject constructor(
-    private val getEventsUseCaseImpl: GetEventsUseCase,
-    private val toggleFavoriteUseCaseImpl: ToggleFavoriteUseCase,
+    private val getEventsUseCase: GetEventsUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
     private val getLocationsUseCase: GetLocationsUseCase,
 
-) : ViewModel() {
+    ) : ViewModel() {
     private val _events: MutableLiveData<List<Event>> = MutableLiveData(emptyList())
     private val _uiState: MutableLiveData<UIState> = MutableLiveData()
     val events: LiveData<List<Event>>
@@ -32,7 +32,7 @@ internal class EventListViewModel @Inject constructor(
         with(stateEvent) {
             when (this) {
                 is EventListStateEvent.SearchEvents -> {
-                    getMovies(query)
+                    getEvents(query)
                 }
                 is EventListStateEvent.ToggleFavorite -> {
                     toggleFavorite(id, isFavorite)
@@ -42,11 +42,11 @@ internal class EventListViewModel @Inject constructor(
 
     }
 
-    private fun getMovies(query: String? = null) {
+    private fun getEvents(query: String? = null) {
         _uiState.value = UIState.Loading
         viewModelScope.launch {
             val response = withContext(Dispatchers.IO) {
-                getEventsUseCaseImpl.invoke(query)
+                getEventsUseCase.invoke(query)
             }
             when (response) {
                 is DataState.Success -> {
@@ -63,7 +63,7 @@ internal class EventListViewModel @Inject constructor(
 
     private fun toggleFavorite(id: String, isFavorite: Boolean) {
         viewModelScope.launch {
-            toggleFavoriteUseCaseImpl.invoke(id, isFavorite)
+            toggleFavoriteUseCase.invoke(id, isFavorite)
         }
     }
 
