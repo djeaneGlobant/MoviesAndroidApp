@@ -1,0 +1,9 @@
+query getCategories {
+    categories {
+        category {
+            parent_categories {
+                title
+            }
+        }
+    }
+}

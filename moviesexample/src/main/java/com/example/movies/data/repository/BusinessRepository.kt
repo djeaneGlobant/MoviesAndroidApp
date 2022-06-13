@@ -8,7 +8,7 @@ interface BusinessRepository {
    suspend fun getBusinessByFoodAndLocation(
        foodType: String,
        location: String
-   ): BusinessData?
+   ): BusinessData
 }
 
 class BusinessRepositoryImpl @Inject constructor(
@@ -18,6 +18,6 @@ class BusinessRepositoryImpl @Inject constructor(
     override suspend fun getBusinessByFoodAndLocation(
         foodType: String,
         location: String
-    ): BusinessData? =
+    ): BusinessData =
         api.getBusinessByFoodAndLocation(foodType, location)
 }

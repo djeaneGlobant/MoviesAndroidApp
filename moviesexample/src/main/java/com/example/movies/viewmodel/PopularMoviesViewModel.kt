@@ -14,20 +14,20 @@ class PopularMoviesViewModel @Inject constructor(
         viewModelScope.launch {
             // TODO - replace parameters with real data below
             get.businessUseCase("pizza", "san francisco")?.let {
-                if (it.search.business?.isNotEmpty() != null) {
-
-                }
+//                if (it.search.business?.isNotEmpty() != null) {
+//
+//                }
             }
         }
     }
 
     fun getEvents() {
         viewModelScope.launch {
-            get.eventUseCase()?.let {
+            /*get.eventUseCase()?.let {
                 if(it.eventSearch.events?.isNotEmpty() != null) {
 
                 }
-            }
+            }*/
         }
     }
 }

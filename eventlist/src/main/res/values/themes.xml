@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme"/>
+    <style name="ProgressBar">
+        <item name="android:indeterminateTint">@color/primaryColor</item>
+    </style>
+
+    <style name="Theme.EventList"/>
+
+    <style name="Theme.EventList.EmptyEventTextView">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="Theme.EventList.RatingBar" parent="Widget.AppCompat.RatingBar">
+        <item name="color">@color/primaryColor</item>
+        <item name="android:backgroundTint">@color/primaryColor</item>
+ <!--        <item name="height">20dip</item>-->
+
+    </style>
+</resources>

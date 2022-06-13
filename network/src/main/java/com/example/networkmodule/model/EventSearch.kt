@@ -7,25 +7,25 @@ data class EventData (
 )
 
 data class EventSearch(
-    val total: Int,
-    val events: List<Event>? = emptyList()
+    @SerializedName("total") val total: Int,
+    @SerializedName("events") val events: List<Event>? = emptyList()
 )
 
 data class Event(
-    val id: String,
-    val location: Location? = null,
-    val name: String? = null,
-    val cost: Int? = 0,
+    @SerializedName("id") val id: String?,
+    @SerializedName("location") val location: Location? = null,
+    @SerializedName("name") val name: String? = null,
+    @SerializedName("cost") val cost: Int? = 0,
     @SerializedName("image_url") val imagePost: String? = null,
-    val description: String? = null,
+    @SerializedName("description") val description: String? = null,
     @SerializedName("time_start") val timeStart: String? = null,
     @SerializedName("time_end") val timeEnd: String? = null,
-    val business: Business? = null
+    @SerializedName("business") val business: Business? = null
 )
 
 data class Location(
-    val city: String? = null,
-    val state: String? = null,
-    val country: String? = null,
+    @SerializedName("city") val city: String? = null,
+    @SerializedName("state") val state: String? = null,
+    @SerializedName("country") val country: String? = null,
     @SerializedName("formatted_address") val address: String? = null
 )

@@ -11,9 +11,9 @@ interface UseCases {
     suspend fun businessUseCase(
         foodType: String,
         location: String
-    ) : BusinessData?
+    ) : BusinessData
 
-    suspend fun eventUseCase(): EventData?
+    suspend fun eventUseCase(location: String?): EventData
 }
 
 class UseCasesImpl @Inject constructor(
@@ -24,9 +24,9 @@ class UseCasesImpl @Inject constructor(
     override suspend fun businessUseCase(
         foodType: String,
         location: String
-    ): BusinessData? =
+    ): BusinessData =
         businessRepository.getBusinessByFoodAndLocation(foodType, location)
 
-    override suspend fun eventUseCase(): EventData? =
-        eventsRepository.getEvents()
+    override suspend fun eventUseCase(location: String?): EventData =
+        eventsRepository.getEvents(location)
 }

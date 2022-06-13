@@ -57,18 +57,4 @@ class NetworkModule {
     ): BusinessApi =
         BusinessApiImpl(apolloClient, gson)
 
-    /*@Provides
-    fun provideNetworkApi(url: String): MoviesApi {
-        val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-        val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-        val retrofit = Retrofit.Builder()
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(url)
-            .build()
-        return retrofit.create()
-    }
-
-    @Provides
-    fun provideBaseUrl() = "https://api.themoviedb.org/3/movie/"*/
 }

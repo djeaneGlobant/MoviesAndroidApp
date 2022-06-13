@@ -1,5 +1,5 @@
-query getEvents($limit: Int!) {
-    event_search(limit: $limit) {
+query getEvents($limit: Int!, $location: String!) {
+    event_search(limit: $limit, location: $location) {
         total
         events {
             id
