@@ -6,4 +6,6 @@
     <string name="search_bar_hint">search events/places by location</string>
     <string name="search_fragment_helper_location">location: not selected</string>
     <string name="fragment_business_sbLocations_hint">choose a location</string>
+    <string name="tab_title_business">business</string>
+    <string name="tab_title_events">events</string>
 </resources>

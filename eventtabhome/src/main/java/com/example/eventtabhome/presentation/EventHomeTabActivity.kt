@@ -2,45 +2,27 @@ package com.example.eventtabhome.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.viewpager.widget.ViewPager
 import com.example.eventtabhome.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayout
 
 class EventHomeTabActivity : AppCompatActivity() {
-
-//    private lateinit var binding: ActivityEventHomeTabBinding
-//    private lateinit var etQuery: EditText
-//    private lateinit var btnSearch: Button
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        binding = ActivityEventHomeTabBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_event_home_tab)
 
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-//        val navView: BottomNavigationView = binding.navView
-//        etQuery = binding.etQuery
-//        btnSearch = binding.btnSearch
+        val viewPager = findViewById<ViewPager>(R.id.vpHome)
+        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+        val businessFragment = BusinessFragment()
+        val eventFragment = EventFragment()
 
-        val navController = findNavController(R.id.nav_host)
+        val adapter = HomeViewPagerAdapter(supportFragmentManager)
+        adapter.addFragment(eventFragment, getString(R.string.tab_title_events))
+        adapter.addFragment(businessFragment, getString(R.string.tab_title_business))
 
-
-        navView.setupWithNavController(navController)
-
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host)
-//        val fragment  = navHostFragment?.childFragmentManager?.fragments?.get(0) as EventListFragment
-
-//        btnSearch.setOnClickListener {
-//            val query = etQuery.text
-//            fragment.searchEvents(query.toString())
-//        }
-
+        viewPager.adapter = adapter
+        tabLayout.setupWithViewPager(viewPager)
+        tabLayout.getTabAt(0)!!.setIcon(R.drawable.ic_event)
+        tabLayout.getTabAt(1)!!.setIcon(R.drawable.ic_business)
     }
 }

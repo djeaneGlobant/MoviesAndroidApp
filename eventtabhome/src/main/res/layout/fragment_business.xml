@@ -19,17 +19,6 @@
         app:layout_constraintBottom_toTopOf="@id/flBusiness"
         />
 
-<!--    <com.example.eventtabhome.widgets.SearchBar-->
-<!--        android:id="@+id/sbCategories"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginHorizontal="@dimen/fragment_business_search_bar_horizontal_margin"-->
-<!--        app:hint="choose a category"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/sbLocations"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        />-->
-
     <FrameLayout
         android:id="@+id/flBusiness"
         android:layout_width="0dp"

@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso
 internal class BusinessListAdapter(
     private val data: List<Business>,
     private val onClickFavorite: (String, Boolean) -> Unit,
-    private val onClickBusiness: (Business) -> Unit,
+    private val onClickBusiness: (Business, Int) -> Unit,
 ) :
     RecyclerView.Adapter<BusinessListAdapter.ViewHolder>() {
 
@@ -35,6 +35,11 @@ internal class BusinessListAdapter(
 
     override fun getItemCount(): Int = data.size
 
+    fun update(id: String, isFavorite: Boolean) {
+        val position = data.indexOfFirst { it.id == id}
+        data[position].isFavorite = isFavorite
+    }
+
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         private val ivBusiness: ImageView = view.findViewById(R.id.ivBusinessImage)
         private val tvName: TextView = view.findViewById(R.id.tvBusinessName)
@@ -51,7 +56,7 @@ internal class BusinessListAdapter(
                 tvDescription.text = this.comment
             }
             rbRating.rating = business.rating?.toFloat() ?: 0f
-            view.setOnClickListener { onClickBusiness.invoke(business) }
+            view.setOnClickListener { onClickBusiness.invoke(business, this.adapterPosition) }
             animate(ibFavorite)
             ibFavorite.setBackgroundResource(getResource(business.isFavorite))
             ibFavorite.setOnClickListener {

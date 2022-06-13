@@ -26,11 +26,19 @@ data class Business(
         val comment: String? = null,
         val rating: Int? = 0,
         val timeCreated: String? = null,
-        val url: String? = null
+        val url: String? = null,
+        val user: User? = null
+    )
+
+    data class User(
+        val profileUrl: String,
+        val imageUrl: String?,
+        val name: String
     )
 }
 
 fun com.example.networkmodule.model.Business.toDomain() = Business(id, name, imageRestaurant, rating, phone, hours?.map { it.toDomain() }, reviews?.map { it.toDomain() })
 private fun com.example.networkmodule.model.Hours.toDomain() = Business.Hours(open?.map { it.toDomain() })
 private fun com.example.networkmodule.model.OpenHours.toDomain() = Business.OpenHours(day, start, end)
-private fun com.example.networkmodule.model.Review.toDomain() = Business.Review(comment, rating, timeCreated, url)
+private fun com.example.networkmodule.model.User.toDomain() = Business.User(profileUrl, imageUrl, name)
+private fun com.example.networkmodule.model.Review.toDomain() = Business.Review(comment, rating, timeCreated, url, user?.toDomain())

@@ -19,6 +19,11 @@ query searchByFoodAndPlace($term: String!, $location: String!) {
                 rating
                 time_created
                 url
+                user {
+                    profile_url
+                    name
+                    image_url
+                }
             }
         }
     }
