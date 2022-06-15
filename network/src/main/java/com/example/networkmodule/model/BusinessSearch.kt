@@ -34,5 +34,11 @@ data class Review(
     @SerializedName("text") val comment: String? = null,
     @SerializedName("rating") val rating: Int? = 0,
     @SerializedName("time_created") val timeCreated: String? = null,
-    @SerializedName("url") val url: String? = null
+    @SerializedName("url") val url: String? = null,
+    @SerializedName("user") val user: User? = null
+)
+data class User(
+    @SerializedName("profile_url") val profileUrl: String,
+    @SerializedName("image_url") val imageUrl: String?,
+    @SerializedName("name") val name: String
 )

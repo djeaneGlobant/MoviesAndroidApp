@@ -16,6 +16,7 @@ data class Event(
     @SerializedName("location") val location: Location? = null,
     @SerializedName("name") val name: String? = null,
     @SerializedName("cost") val cost: Int? = 0,
+    @SerializedName("is_free") val isFree: Boolean? = false,
     @SerializedName("image_url") val imagePost: String? = null,
     @SerializedName("description") val description: String? = null,
     @SerializedName("time_start") val timeStart: String? = null,
@@ -24,8 +25,5 @@ data class Event(
 )
 
 data class Location(
-    @SerializedName("city") val city: String? = null,
-    @SerializedName("state") val state: String? = null,
-    @SerializedName("country") val country: String? = null,
-    @SerializedName("formatted_address") val address: String? = null
+    @SerializedName("city") val city: String? = null
 )

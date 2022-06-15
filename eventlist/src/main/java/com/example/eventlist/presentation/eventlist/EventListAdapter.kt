@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat
 
 internal class EventListAdapter(
     private val data: List<Event>,
-    private val onClickEvent: (Event) -> Unit,
+    private val onClickEvent: (Event, Int) -> Unit,
     private val onClickFavorite: (String, Boolean) -> Unit
 ) : RecyclerView.Adapter<EventListAdapter.EventsViewHolder>() {
     override fun onCreateViewHolder(
@@ -34,6 +34,11 @@ internal class EventListAdapter(
 
     override fun getItemCount(): Int = data.size
 
+    fun update(id: String, isFavorite: Boolean) {
+        val position = data.indexOfFirst { it.id == id}
+        data[position].isFavorite = isFavorite
+    }
+
     inner class EventsViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
         private val ivMovieImage = view.findViewById<ImageView>(R.id.ivMovieImage)
@@ -50,7 +55,7 @@ internal class EventListAdapter(
                 tvYearOfRelease.text = toFormat(event.timeStart)
                 ibFavorite.setBackgroundResource(getResource(isFavorite))
                 animate(ibFavorite)
-                view.setOnClickListener { onClickEvent(event) }
+                view.setOnClickListener { onClickEvent(event, adapterPosition) }
                 ibFavorite.setOnClickListener {
                     toggleFavorite(event)
                     animate(it)

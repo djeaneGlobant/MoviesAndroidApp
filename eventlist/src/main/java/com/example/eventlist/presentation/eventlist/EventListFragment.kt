@@ -11,8 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.base.viewmodel.ViewModelFactory
-import com.example.eventlist.domain.model.Event
 import com.example.eventlist.R
+import com.example.eventlist.domain.model.Event
 import com.example.eventlist.presentation.util.UIState
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -28,6 +28,7 @@ class EventListFragment : Fragment() {
     private lateinit var rvFlEvents: RecyclerView
     private lateinit var pbLoading: ProgressBar
     private lateinit var tvEmptyResults: TextView
+    private var currentPosition: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,11 +76,11 @@ class EventListFragment : Fragment() {
 
     private fun setMovies(events: List<Event>) {
         rvFlEvents.adapter = EventListAdapter(events,
-            onClickEvent = { event ->
+            onClickEvent = { event, position ->
+                currentPosition = position
                 onClickEvent?.invoke(event)
             }, onClickFavorite = { id, isFavorite ->
                 model.setStateEvent(EventListStateEvent.ToggleFavorite(id, isFavorite))
-                onClickFavorite?.invoke(id, isFavorite)
             })
     }
 
@@ -87,21 +88,24 @@ class EventListFragment : Fragment() {
         model.setStateEvent(EventListStateEvent.SearchEvents(query))
     }
 
+    fun toggleFavorite(id: String, isFavorite: Boolean) {
+        model.setStateEvent(EventListStateEvent.ToggleFavorite(id, isFavorite))
+        (rvFlEvents.adapter as EventListAdapter).update(id, isFavorite)
+        rvFlEvents.adapter?.notifyItemChanged(currentPosition!!)
+    }
+
     companion object {
         private var onClickEvent: ((Event) -> Unit)? = null
-        private var onClickFavorite: ((String, Boolean) -> Unit)? = null
         private var onLocationsLoaded: ((List<String>) -> Unit)? = null
 
 
         @JvmStatic
         fun newInstance(
             onClickEvent: ((Event) -> Unit)? = null,
-            onClickFavorite: ((String, Boolean) -> Unit)? = null,
             onLocationsLoaded: ((List<String>) -> Unit)? = null
         ) =
             EventListFragment().apply {
                 Companion.onClickEvent = onClickEvent
-                Companion.onClickFavorite = onClickFavorite
                 Companion.onLocationsLoaded = onLocationsLoaded
             }
     }

@@ -1,9 +1,7 @@
 package com.example.eventlist.domain.model
 
 data class Address(
-    val city: String,
-    val country: String,
-    val state: String
+    val city: String
 )
 
-internal fun com.example.networkmodule.model.Location.toDomain() = Address(city ?: "", state ?: "", country ?: "")
+internal fun com.example.networkmodule.model.Location.toDomain() = Address(city ?: "")

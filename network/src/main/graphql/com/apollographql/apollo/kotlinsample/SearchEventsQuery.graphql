@@ -5,12 +5,10 @@ query getEvents($limit: Int!, $location: String!) {
             id
             location {
                 city
-                state
-                country
-                formatted_address
             }
             name
             cost
+            is_free
             image_url
             description
             time_start

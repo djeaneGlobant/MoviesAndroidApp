@@ -28,6 +28,7 @@ class BusinessListFragment : Fragment() {
     private lateinit var rvFlBusiness: RecyclerView
     private lateinit var pbLoading: ProgressBar
     private lateinit var tvEmptyResults: TextView
+    private var currentPosition: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +52,8 @@ class BusinessListFragment : Fragment() {
                 it,
                 onClickFavorite = { id, isFavorite ->
                     model.setStateEvent(BusinessListStateEvent.ToggleFavorite(id, isFavorite))
-                    onClickFavorite?.invoke(id, isFavorite)
-                }, onClickBusiness = { business ->
+                }, onClickBusiness = { business, position ->
+                    currentPosition = position
                     onClickBusiness?.invoke(business)
                 }
             )
@@ -62,6 +63,7 @@ class BusinessListFragment : Fragment() {
 
         return view
     }
+
 
     private fun manageUiState(uiState: UIState) {
         pbLoading.visibility = View.GONE
@@ -94,15 +96,19 @@ class BusinessListFragment : Fragment() {
         model.setStateEvent(BusinessListStateEvent.LoadBusiness(currentTerm, currentLocation))
     }
 
+    fun toggleFavorite(id: String, isFavorite: Boolean) {
+        model.setStateEvent(BusinessListStateEvent.ToggleFavorite(id, isFavorite))
+        (rvFlBusiness.adapter as BusinessListAdapter).update(id, isFavorite)
+        rvFlBusiness.adapter?.notifyItemChanged(currentPosition!!)
+    }
+
     companion object {
         private var onLocationsLoaded: ((List<String>) -> Unit)? = null
         private var onCategoriesLoaded: ((List<String>) -> Unit)? = null
-        private var onClickFavorite: ((String, Boolean) -> Unit)? = null
         private var onClickBusiness: ((Business) -> Unit)? = null
 
         @JvmStatic
         fun newInstance(
-            onClickFavorite: ((String, Boolean) -> Unit)? = null,
             onClickBusiness: ((Business) -> Unit)? = null,
             onLocationsLoaded: ((List<String>) -> Unit)? = null,
             onCategoriesLoaded: ((List<String>) -> Unit)? = null,
@@ -110,7 +116,6 @@ class BusinessListFragment : Fragment() {
             Companion.onCategoriesLoaded = onCategoriesLoaded
             Companion.onLocationsLoaded = onLocationsLoaded
             Companion.onClickBusiness = onClickBusiness
-            Companion.onClickFavorite = onClickFavorite
         }
     }
 
