@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.eventlist.presentation.eventlist.EventListFragment">
+
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/rvFlEvents"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:background="@color/recycler_view_background_color"
+       />
+
+   <ProgressBar
+       android:id="@+id/pbLoading"
+       android:layout_width="120dp"
+       android:layout_height="120dp"
+       android:layout_gravity="center"
+       android:visibility="gone"
+       style="@style/ProgressBar"
+       />
+
+   <TextView
+       android:id="@+id/tvEmptyResults"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:text="@string/fragment_event_empty_data_text"
+       android:visibility="gone"
+       style="@style/Theme.EventList.EmptyEventTextView"
+       />
+
+</FrameLayout>

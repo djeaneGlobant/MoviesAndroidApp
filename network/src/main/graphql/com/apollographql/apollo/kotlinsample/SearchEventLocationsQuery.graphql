@@ -1,0 +1,12 @@
+query getEventLocations($limit: Int!) {
+    event_search(limit: $limit) {
+        total
+        events {
+            location {
+                city
+                state
+                country
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+query getEvents($limit: Int!, $location: String!) {
+    event_search(limit: $limit, location: $location) {
+        total
+        events {
+            id
+            location {
+                city
+            }
+            name
+            cost
+            is_free
+            image_url
+            description
+            time_start
+            time_end
+            business {
+                id
+                name
+                photos
+            }
+        }
+    }
+}

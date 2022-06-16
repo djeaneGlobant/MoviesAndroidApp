@@ -1,0 +1,30 @@
+query searchByFoodAndPlace($term: String!, $location: String!) {
+    search(term: $term, location: $location) {
+        total
+        business {
+            id
+            name
+            photos
+            rating
+            phone
+            hours {
+                open {
+                    day
+                    start
+                    end
+                }
+            }
+            reviews {
+                text
+                rating
+                time_created
+                url
+                user {
+                    profile_url
+                    name
+                    image_url
+                }
+            }
+        }
+    }
+}
